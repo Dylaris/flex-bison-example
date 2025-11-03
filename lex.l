@@ -1,38 +1,20 @@
 DIGIT [0-9]
 ID    [a-zA-Z][a-zA-Z0-9]*
 
+/* match keyword before identifier */
+
 %%
 
-[" "\n] {}
+int        return INT;
+return     return RETURN;
+void       return VOID;
 
-{DIGIT}+ {
-    da_append(&tokens, TOKEN_INTEGER);
-}
-
-{ID} {
-    da_append(&tokens, TOKEN_IDENTIFIER);
-}
-
-"\"".*"\"" {
-    da_append(&tokens, TOKEN_STRLIT);
-}
-
-"(" {
-    da_append(&tokens, TOKEN_OPAREN);
-}
-
-")" {
-    da_append(&tokens, TOKEN_CPAREN);
-}
-
-"{" {
-    da_append(&tokens, TOKEN_OCURLY);
-}
-
-"}" {
-    da_append(&tokens, TOKEN_CCURLY);
-}
-
-";" {
-    da_append(&tokens, TOKEN_SEMICOLON);
-}
+{ID}       { yylval.s_value = strdup(yytext); return ID;     }
+{DIGIT}+   { yylval.i_value = atoi(yytext);   return NUMBER; }
+"\"".*"\"" { yylval.s_value = strndup(yytext+1, strlen(yytext)-2); return STRLIT; }
+"("        return OPAREN;
+")"        return CPAREN;
+"{"        return OCURLY;
+"}"        return CCURLY;
+";"        return SEMICOLON;
+[" "\n]
