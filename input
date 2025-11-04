@@ -1,6 +1,6 @@
 int main(void)
 {
     printf("Hello, World");
-    printf("Foo, Bar");
+    repeat 3 repeat 3 printf("Foo, Bar");
     return 100;
 }

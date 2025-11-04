@@ -7,6 +7,7 @@ ID    [a-zA-Z][a-zA-Z0-9]*
 
 int        return INT;
 return     return RETURN;
+repeat     return REPEAT;
 void       return VOID;
 
 {ID}       { yylval.s_value = strdup(yytext); return ID;     }
